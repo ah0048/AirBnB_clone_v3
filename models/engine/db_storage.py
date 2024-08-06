@@ -89,4 +89,6 @@ class DBStorage:
                 counter += self.__session.query(classes[clss]).count()
             return counter
         else:
+            if isinstance(cls, str):
+                cls = eval(cls)
             return self.__session.query(cls).count()
