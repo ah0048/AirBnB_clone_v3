@@ -23,6 +23,7 @@ def stat_count():
     '''count number of each objects by type'''
     classes = {"amenities": Amenity, "cities": City, "places": Place,
                "reviews": Review, "states": State, "users": User}
+    resp = {}
     for key, value in classes.items():
-        classes[key] = storage.count(value)
-    return jsonify(classes)
+        resp[key] = storage.count(value)
+    return jsonify(resp)
