@@ -76,12 +76,10 @@ class FileStorage:
         for key, value in self.__objects.items():
             if cls == value.__class__ or cls == value.__class__.__name__:
                 if value.id == id:
-                    print(key)
                     return value
         return None
 
     def count(self, cls=None):
         """method to count the number of objects in storage"""
-        counter = 0
         all_clss = self.all(cls=cls).values()
         return len(all_clss)
