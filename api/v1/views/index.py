@@ -3,7 +3,7 @@
 from models import storage
 
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, abort
 
 
 @app_views.route('/status', strict_slashes=False)
@@ -22,4 +22,7 @@ def stat_count():
     resp = {}
     for key, value in classes.items():
         resp[key] = storage.count(value)
-    return jsonify(resp)
+    if resp:
+        return jsonify(resp)
+    else:
+        abort(404)
