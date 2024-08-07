@@ -3,10 +3,10 @@
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request
-from models.state import State
+from models.city import City
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', strict_slashes=False)
 def all_states():
     '''return all states'''
     states = storage.all(State)
@@ -46,8 +46,9 @@ def post_state():
     name = data.get('name')
     if name is None:
         abort(400, 'Missing name')
-    new_state = State(**data)
-    new_state.save()
+    new_state = State(name=name)
+    storage.new(new_state)
+    storage.save()
     return jsonify(new_state.to_dict()), 201
 
 
