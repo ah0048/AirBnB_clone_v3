@@ -18,7 +18,7 @@ def cities_state(state_id):
     cities_state = []
     for city in cities.values():
         if city.state_id == state.id:
-            cities_state.append(city)
+            cities_state.append(city.to_dict())
     return jsonify(cities_state)
 
 
