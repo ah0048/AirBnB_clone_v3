@@ -5,7 +5,16 @@ import json
 import requests
 
 if __name__ == "__main__":
-    """ PUT /api/v1/amenities/<amenity_id>
+    """ Get one user
     """
-    r = requests.put("http://0.0.0.0:5000/api/v1/amenities/{}".format("doesn_t_exist"), data=json.dumps({ 'name': "NewAmenityName" }), headers={ 'Content-Type': "application/json" })
+    r = requests.get("http://0.0.0.0:5000/api/v1/users")
+    r_j = r.json()
+    user_id = r_j[0].get('id')
+
+    """ GET /api/v1/users/<user_id>
+    """
+    r = requests.get("http://0.0.0.0:5000/api/v1/users/{}".format(user_id))
     print(r.status_code)
+    r_j = r.json()
+    print(r_j.get('id') == user_id)
+    print(r_j.get('email') is None)

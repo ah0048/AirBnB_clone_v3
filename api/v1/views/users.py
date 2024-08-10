@@ -21,7 +21,7 @@ def all_users():
 def req_user(user_id):
     '''gets a specific user'''
     try:
-        user = storage.get(user, user_id)
+        user = storage.get(User, user_id)
     except KeyError:
         abort(404)
     if user is None:
