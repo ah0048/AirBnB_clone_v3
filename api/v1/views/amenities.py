@@ -64,12 +64,14 @@ def post_amenity():
                  methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
     '''updates an existing amenity'''
+    if request.content_type != "application/json":
+        abort(400, 'Not a JSON')
     try:
         amenity = storage.get(Amenity, amenity_id)
     except KeyError:
         abort(404)
-    if request.content_type != "application/json":
-        abort(400, 'Not a JSON')
+    if amenity is None:
+        abort(404)
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
