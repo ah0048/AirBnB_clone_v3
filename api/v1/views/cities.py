@@ -21,6 +21,7 @@ def cities_state(state_id):
             cities_state.append(city.to_dict())
     return jsonify(cities_state)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/citie/<city_id>',
                  methods=['GET'], strict_slashes=False)
@@ -71,7 +72,8 @@ def post_city(state_id):
     return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT', 'GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>',
+                 methods=['PUT', 'GET'], strict_slashes=False)
 def update_city(city_id):
     '''update a city'''
     if request.content_type != "application/json":
