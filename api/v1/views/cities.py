@@ -21,12 +21,15 @@ def cities_state(state_id):
             cities_state.append(city.to_dict())
     return jsonify(cities_state)
 
-
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/citie/<city_id>',
                  methods=['GET'], strict_slashes=False)
 def req_city(city_id):
     '''return a specific city'''
-    city = storage.get(City, city_id)
+    try:
+        city = storage.get(City, city_id)
+    except KeyError:
+        abort(404)
     if city is None:
         abort(404)
     return jsonify(city.to_dict())
@@ -68,7 +71,7 @@ def post_city(state_id):
     return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['PUT', 'GET'], strict_slashes=False)
 def update_city(city_id):
     '''update a city'''
     if request.content_type != "application/json":
@@ -82,7 +85,6 @@ def update_city(city_id):
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
-    name = data.get('name')
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(city, key, value)
