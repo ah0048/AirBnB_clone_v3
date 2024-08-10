@@ -40,6 +40,8 @@ def del_state(state_id):
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
     '''post a states'''
+    if request.content_type != "application/json":
+        abort(400, 'Not a JSON')
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
@@ -54,7 +56,12 @@ def post_state():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     '''update a specific state'''
-    state_obj = storage.get(State, state_id)
+    if request.content_type != "application/json":
+        abort(400, 'Not a JSON')
+    try:
+        state_obj = storage.get(State, state_id)
+    except KeyError:
+        abort(404)
     if state_obj is None:
         abort(404)
     data = request.get_json()
