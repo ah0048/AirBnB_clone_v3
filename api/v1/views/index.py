@@ -1,28 +1,38 @@
 #!/usr/bin/python3
-'''index file'''
-from models import storage
-
+"""
+creating view from app_views bluprint
+that just return json msg with key status
+and value OK
+"""
 from api.v1.views import app_views
 from flask import jsonify, abort
+from models import storage
+
+classes = {
+    "amenities": "Amenity",
+    "cities": "City",
+    "places": "Place",
+    "reviews": "Review",
+    "states": "State",
+    "users": "User"}
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
-    '''method to get status'''
-    return jsonify({'status': 'OK'})
+    """
+    return json msg with key status
+    and value OK
+    """
+    return jsonify({"status": "OK"})
 
 
-classes = {"amenities": 'Amenity', "cities": 'City', "places": 'Place',
-           "reviews": 'Review', "states": 'State', "users": 'User'}
-
-
-@app_views.route('/stats', strict_slashes=False)
-def stat_count():
-    '''count number of each objects by type'''
-    resp = {}
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
+def stats():
+    """return number of all obbjects of all types"""
+    dic = {}
     for key, value in classes.items():
-        resp[key] = storage.count(value)
-    if resp:
-        return jsonify(resp)
+        dic[key] = storage.count(value)
+    if dic:
+        return jsonify(dic)
     else:
         abort(404)
