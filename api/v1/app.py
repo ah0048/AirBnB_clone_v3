@@ -11,7 +11,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-cors = CORS(app=app, resources={r"/api/*": {'origins': '*'}})
+cors = CORS(app=app, resources={r"/*": {'origins': '0.0.0.0'}})
 
 
 if __name__ == "__main__":
