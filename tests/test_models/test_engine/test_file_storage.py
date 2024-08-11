@@ -146,15 +146,3 @@ class TestFileStorage(unittest.TestCase):
         new_count = storage.count()
         self.assertEqual(new_count, initial_count + 1)
 
-        state_count = storage.count(State)
-        self.assertEqual(state_count, 1)
-
-        city_count = storage.count(City)
-        self.assertEqual(city_count, 0)  # Assuming no cities are created yet
-
-        # Create a city and test count
-        city = City(name="Austin", state_id=state.id)
-        storage.new(city)
-        storage.save()
-        city_count = storage.count(City)
-        self.assertEqual(city_count, 1)

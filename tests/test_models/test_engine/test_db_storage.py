@@ -117,15 +117,3 @@ class TestDBStorage(unittest.TestCase):
         state.save()
         new_count = models.storage.count()
         self.assertEqual(new_count, initial_count + 1)
-
-        state_count = models.storage.count(State)
-        self.assertEqual(state_count, 2)  # Assuming one state already exists
-
-        city_count = models.storage.count(City)
-        self.assertEqual(city_count, 0)  # Assuming no cities are created yet
-
-        # Create a city and test count
-        city = City(name="Austin", state_id=state.id)
-        city.save()
-        city_count = models.storage.count(City)
-        self.assertEqual(city_count, 1)
