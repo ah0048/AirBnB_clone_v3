@@ -81,6 +81,7 @@ def post_review(place_id):
     text = data.get('text')
     if text is None:
         abort(400, 'Missing text')
+    data['place_id'] = place_id
     new_review = Review(**data)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
